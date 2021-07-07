@@ -1,0 +1,20 @@
+{
+  "name": "@aspirity/grapes",
+  "version": "0.0.1",
+  "description": "Granular global state hook for react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspirity-ru/grapes.git"
+  },
+  "keywords": [],
+  "author": "Denis Zavershinskiy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aspirity-ru/grapes/issues"
+  },
+  "homepage": "https://github.com/aspirity-ru/grapes#readme"
+}
