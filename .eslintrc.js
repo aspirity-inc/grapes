@@ -19,4 +19,16 @@ module.exports = {
   },
   plugins: ["@typescript-eslint"],
   rules: {},
+  overrides: [
+    {
+      files: ["./build.js"],
+      rules: {
+        "import/no-extraneous-dependencies": [
+          "error",
+          { devDependencies: true },
+        ],
+        "no-console": "off",
+      },
+    },
+  ],
 };

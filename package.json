@@ -2,8 +2,12 @@
   "name": "@aspirity/grapes",
   "version": "0.0.1",
   "description": "Granular global state hook for react",
-  "main": "index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/dts/index.js",
   "scripts": {
+    "prebuild": "rimraf ./dist",
+    "build": "node ./build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +23,7 @@
   "homepage": "https://github.com/aspirity-ru/grapes#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.28.2",
+    "esbuild": "0.12.15",
     "eslint": "7.30.0",
     "eslint-config-airbnb-typescript": "12.3.1",
     "eslint-config-prettier": "8.3.0",
@@ -26,6 +31,8 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react-hooks": "4.2.0",
     "prettier": "2.3.2",
+    "rimraf": "3.0.2",
+    "tiny-glob": "0.2.9",
     "typescript": "4.3.5"
   }
 }

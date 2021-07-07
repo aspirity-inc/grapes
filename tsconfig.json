@@ -3,7 +3,7 @@
   "exclude": ["./dist/**/*"],
   "compilerOptions": {
     /* Paths */
-    "outDir": "./dist",
+    "outDir": "./dist/dts",
     "typeRoots": ["./node_modules/@types", "./type-definitions"],
 
     /* Project */
