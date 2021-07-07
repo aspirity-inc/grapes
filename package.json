@@ -2,13 +2,14 @@
   "name": "@aspirity/grapes",
   "version": "0.0.1",
   "description": "Granular global state hook for react",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/dts/index.js",
+  "main": "dist/cjs/grapes.js",
+  "module": "dist/esm/grapes.js",
+  "types": "dist/dts/grapes.js",
   "scripts": {
     "prebuild": "rimraf ./dist",
     "build": "node ./build.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./"
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,13 @@
   },
   "homepage": "https://github.com/aspirity-ru/grapes#readme",
   "devDependencies": {
+    "@types/react": "17.0.13",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "esbuild": "0.12.15",
     "eslint": "7.30.0",
     "eslint-config-airbnb-typescript": "12.3.1",
     "eslint-config-prettier": "8.3.0",
+    "eslint-formatter-pretty": "4.1.0",
     "eslint-plugin-import": "2.23.4",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react-hooks": "4.2.0",
@@ -34,5 +37,8 @@
     "rimraf": "3.0.2",
     "tiny-glob": "0.2.9",
     "typescript": "4.3.5"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3 || ^17 || ^18"
   }
 }

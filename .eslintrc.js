@@ -18,7 +18,22 @@ module.exports = {
     project: "./tsconfig.json",
   },
   plugins: ["@typescript-eslint"],
-  rules: {},
+  rules: {
+    "no-underscore-dangle": ["error", { allowAfterThis: true }],
+
+    /**
+     * Using the any type defeats the purpose of using TypeScript.
+     * When any is used, all compiler type checks around that value are ignored.
+     * https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md
+     */
+    "@typescript-eslint/no-explicit-any": [
+      "warn",
+      {
+        fixToUnknown: true,
+        ignoreRestArgs: true,
+      },
+    ],
+  },
   overrides: [
     {
       files: ["./build.js"],
