@@ -1,6 +1,6 @@
 {
   "name": "@aspirity/grapes",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Granular global state hook for react",
   "main": "dist/cjs/grapes.js",
   "module": "dist/esm/grapes.js",
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/aspirity-ru/grapes.git"
   },
-  "keywords": [],
+  "keywords": ["react", "hooks", "state"],
   "author": "Denis Zavershinskiy",
   "license": "MIT",
   "bugs": {
