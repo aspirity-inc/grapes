@@ -1,6 +1,12 @@
 import type { Grape } from "./grape";
 import { logDebug, logError } from "./logger";
-import { getValue, AnyFnArgument, Undef, ValueOrGetter } from "./utils";
+import {
+  getValue,
+  AnyFnArgument,
+  Undef,
+  ValueOrGetter,
+  TimeoutId,
+} from "./utils";
 
 const DEFAULT_CLEANUP_TIMEOUT = 2000;
 
@@ -15,7 +21,7 @@ export class GrapesBunch {
 
   _subscribers = new Map<string, Set<(v: AnyFnArgument) => void>>();
 
-  _cleanupTimeouts = new Map<string, number>();
+  _cleanupTimeouts = new Map<string, TimeoutId>();
 
   constructor(options?: GrapesBunchOptions) {
     const { cleanupTimeoutMs = DEFAULT_CLEANUP_TIMEOUT } = options ?? {};
@@ -61,7 +67,7 @@ export class GrapesBunch {
       this._cleanupTimeouts.set(grape, timeoutId);
       logDebug("cleanup scheduled", grape);
     } else if (subscribersCount !== 0 && isCleanupScheduled) {
-      const timeoutId = this._cleanupTimeouts.get(grape);
+      const timeoutId = this._cleanupTimeouts.get(grape)!;
       this._cleanupTimeouts.delete(grape);
       clearTimeout(timeoutId);
       logDebug("cleanup canceled", grape);
@@ -70,7 +76,7 @@ export class GrapesBunch {
 
   _cleanup = <T>(grape: Grape<T>): void => {
     logDebug("cleanup", grape);
-    clearTimeout(this._cleanupTimeouts.get(grape));
+    clearTimeout(this._cleanupTimeouts.get(grape)!);
     this._grapes.delete(grape);
     this._subscribers.delete(grape);
     this._cleanupTimeouts.delete(grape);

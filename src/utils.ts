@@ -2,6 +2,7 @@ export type AnyFnArgument = any; // eslint-disable-line @typescript-eslint/no-ex
 export type ValueOrGetter<T> = T | (() => T);
 export type Undef<T> = T | undefined;
 export type Setter<T> = (prev: Undef<T>) => T;
+export type TimeoutId = ReturnType<typeof setTimeout>;
 
 export function noop() {}
 
