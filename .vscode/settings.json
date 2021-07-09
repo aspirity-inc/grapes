@@ -4,6 +4,7 @@
     "esbuild",
     "outdir",
     "prebuild",
+    "unmount",
     "zavershinskiy"
   ]
 }

@@ -9,6 +9,7 @@
     /* Project */
     "target": "ESNext", // TypeScript is not used for building, allow all modern features
     "module": "ESNext", // TypeScript is not used for building, allow all modern features
+    "jsx": "react",
 
     /* Build */
     // `tsc` only used to build type declaration files (`.d.ts`)
