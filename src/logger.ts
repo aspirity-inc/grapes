@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import { noop } from "./utils";
+
 export interface Logger {
   log(...args: unknown[]): void;
   error(...args: unknown[]): void;
@@ -10,9 +12,7 @@ let logger: Logger = {
   log: console.log,
   error: console.error,
   warn: console.warn,
-  debug: () => {
-    /* ignore by default */
-  },
+  debug: noop,
 };
 
 export function setLogger(newLogger: Partial<Logger>) {

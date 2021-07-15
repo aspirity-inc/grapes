@@ -33,11 +33,15 @@ function ensureGrape<T>(
 const GrapesBunchContext = createContext<GrapesBunch>(createGrapesBunch());
 export const GrapesBunchProvider = GrapesBunchContext.Provider;
 
+export function useGrapesBunch(): GrapesBunch {
+  return useContext(GrapesBunchContext);
+}
+
 export function useGrape<T>(
   grape: Grape<T>,
   defaultValue: ValueOrGetter<T>
 ): [T, Dispatch<SetStateAction<T>>] {
-  const bunch = useContext(GrapesBunchContext);
+  const bunch = useGrapesBunch();
   const [value, setValue] = useState(() =>
     ensureGrape(bunch, grape, defaultValue)
   );

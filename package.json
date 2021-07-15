@@ -8,14 +8,18 @@
   "scripts": {
     "prebuild": "rimraf ./dist",
     "build": "node ./build.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aspirity-ru/grapes.git"
   },
-  "keywords": ["react", "hooks", "state"],
+  "keywords": [
+    "react",
+    "hooks",
+    "state"
+  ],
   "author": "Denis Zavershinskiy",
   "license": "MIT",
   "bugs": {
@@ -23,9 +27,12 @@
   },
   "homepage": "https://github.com/aspirity-ru/grapes#readme",
   "devDependencies": {
+    "@testing-library/react-hooks": "7.0.1",
+    "@types/jest": "26.0.24",
     "@types/react": "17.0.13",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "esbuild": "0.12.15",
+    "esbuild-jest": "0.5.0",
     "eslint": "7.30.0",
     "eslint-config-airbnb-typescript": "12.3.1",
     "eslint-config-prettier": "8.3.0",
@@ -33,12 +40,15 @@
     "eslint-plugin-import": "2.23.4",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react-hooks": "4.2.0",
+    "jest": "27.0.6",
     "prettier": "2.3.2",
+    "react": "^16.9.0 || ^17 || ^18",
+    "react-test-renderer": "17.0.2",
     "rimraf": "3.0.2",
     "tiny-glob": "0.2.9",
     "typescript": "4.3.5"
   },
   "peerDependencies": {
-    "react": "^16.8.3 || ^17 || ^18"
+    "react": "^16.9.0 || ^17 || ^18"
   }
 }
