@@ -224,28 +224,6 @@ describe("useGrape.ts", () => {
       expect(bunch.on).nthCalledWith(1, grape, ANY_FN);
     });
 
-    it("should resubscribe on bunch change", () => {
-      const grape = createGrape<unknown>("unknown");
-      const defaultValue = Symbol("DEFAULT_VALUE");
-      const initialOff = jest.fn();
-      const anotherOff = jest.fn();
-      const initialBunch = createMockGrapesBunch(initialOff);
-      const anotherBunch = createMockGrapesBunch(anotherOff);
-      const hook = renderHook(
-        ({ currentGrape }) => useGrape(currentGrape, defaultValue),
-        createOptions(initialBunch, grape)
-      );
-
-      hook.rerender({ currentBunch: anotherBunch, currentGrape: grape });
-
-      expect(initialBunch.on).toBeCalledTimes(1);
-      expect(initialBunch.on).nthCalledWith(1, grape, ANY_FN);
-      expect(initialOff).toBeCalledTimes(1);
-      expect(anotherBunch.on).toBeCalledTimes(1);
-      expect(anotherBunch.on).nthCalledWith(1, grape, ANY_FN);
-      expect(anotherOff).not.toBeCalled();
-    });
-
     describe("grape change", () => {
       it("should resubscribe to new grape", () => {
         const initialGrape = createGrape<unknown>("unknown");
@@ -270,8 +248,7 @@ describe("useGrape.ts", () => {
         const initialGrape = createGrape<unknown>("unknown");
         const anotherGrape = createGrape<unknown>("unknown");
         const defaultValue = Symbol("DEFAULT_VALUE");
-        const off = jest.fn();
-        const bunch = createMockGrapesBunch(off);
+        const bunch = createMockGrapesBunch();
         bunch.get.mockImplementation(bunchGetReturnsDefault());
         const hook = renderHook(
           ({ currentGrape }) => useGrape(currentGrape, defaultValue),
@@ -323,6 +300,104 @@ describe("useGrape.ts", () => {
         hook.rerender({ currentBunch: bunch, currentGrape: anotherGrape });
 
         expect(hook.result.current).toEqual([store[anotherGrape], ANY_FN]);
+      });
+    });
+
+    describe("grapes bunch change", () => {
+      const unknownGrape = createGrape<unknown>("unknown");
+      const defaultValue = Symbol("DEFAULT_VALUE");
+
+      it("should resubscribe to grape in new bunch", () => {
+        const initialOff = jest.fn();
+        const initialBunch = createMockGrapesBunch(initialOff);
+        const anotherBunch = createMockGrapesBunch();
+        const hook = renderHook(
+          ({ currentGrape }) => useGrape(currentGrape, defaultValue),
+          createOptions(initialBunch, unknownGrape)
+        );
+        expect(initialBunch.on).toBeCalledTimes(1);
+        expect(initialBunch.on).nthCalledWith(1, unknownGrape, ANY_FN);
+
+        hook.rerender({
+          currentBunch: anotherBunch,
+          currentGrape: unknownGrape,
+        });
+
+        expect(initialOff).toBeCalledTimes(1);
+        expect(anotherBunch.on).toBeCalledTimes(1);
+        expect(anotherBunch.on).nthCalledWith(1, unknownGrape, ANY_FN);
+      });
+
+      it("should set default value for unset grapes", () => {
+        const initialBunch = createMockGrapesBunch();
+        initialBunch.get.mockImplementation(bunchGetReturnsDefault());
+        const anotherBunch = createMockGrapesBunch();
+        anotherBunch.get.mockImplementation(bunchGetReturnsDefault());
+
+        const hook = renderHook(
+          () => useGrape(unknownGrape, defaultValue),
+          createOptions(initialBunch, unknownGrape)
+        );
+        expect(initialBunch.set).lastCalledWith(unknownGrape, defaultValue);
+
+        hook.rerender({
+          currentBunch: anotherBunch,
+          currentGrape: unknownGrape,
+        });
+
+        expect(anotherBunch.set).lastCalledWith(unknownGrape, defaultValue);
+      });
+
+      it("should NOT set value for set grapes", () => {
+        const one = Symbol("one");
+        const two = Symbol("two");
+        const initialBunch = createMockGrapesBunch();
+        initialBunch.get.mockImplementation(
+          bunchGetFromStore({ [unknownGrape]: one })
+        );
+        const anotherBunch = createMockGrapesBunch();
+        anotherBunch.get.mockImplementation(
+          bunchGetFromStore({ [unknownGrape]: two })
+        );
+
+        const hook = renderHook(
+          () => useGrape(unknownGrape, defaultValue),
+          createOptions(initialBunch, unknownGrape)
+        );
+        expect(initialBunch.set).not.toBeCalled();
+
+        hook.rerender({
+          currentBunch: anotherBunch,
+          currentGrape: unknownGrape,
+        });
+
+        expect(anotherBunch.set).not.toBeCalled();
+      });
+
+      it("should return grape value from new bunch", () => {
+        const one = Symbol("one");
+        const two = Symbol("two");
+        const initialBunch = createMockGrapesBunch();
+        initialBunch.get.mockImplementation(
+          bunchGetFromStore({ [unknownGrape]: one })
+        );
+        const anotherBunch = createMockGrapesBunch();
+        anotherBunch.get.mockImplementation(
+          bunchGetFromStore({ [unknownGrape]: two })
+        );
+
+        const hook = renderHook(
+          () => useGrape(unknownGrape, defaultValue),
+          createOptions(initialBunch, unknownGrape)
+        );
+        expect(hook.result.current).toEqual([one, ANY_FN]);
+
+        hook.rerender({
+          currentBunch: anotherBunch,
+          currentGrape: unknownGrape,
+        });
+
+        expect(hook.result.current).toEqual([two, ANY_FN]);
       });
     });
   });
