@@ -15,6 +15,7 @@ async function build(baseOptions, format) {
     ...baseOptions,
     format,
     outdir: `./dist/${format}`,
+    target: format === "esm" ? "es2018" : "es2015",
   });
 
   console.timeEnd(`✅ ${format} build time`);
