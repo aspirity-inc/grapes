@@ -1,6 +1,6 @@
 {
   "name": "@aspirity/grapes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Granular global state hook for react",
   "main": "dist/cjs/grapes.js",
   "module": "dist/esm/grapes.js",
